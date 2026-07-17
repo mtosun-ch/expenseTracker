@@ -1,5 +1,5 @@
 package expenseTracker.model;
 
-public class MonthAccountBalance {
+public class MonthAccountBalance extends AccountBalance {
     
 }
