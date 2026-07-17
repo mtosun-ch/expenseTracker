@@ -15,6 +15,8 @@ public class Expense {
         setDate();
     }
 
+    Expense() {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
