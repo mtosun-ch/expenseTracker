@@ -33,7 +33,7 @@ public class AccountBalance {
     }
 
     /**
-     * Returns the expenses of given a date
+     * Returns the expenses of a date
      * 
      * @param date of type LocalDate
      * 
@@ -47,6 +47,31 @@ public class AccountBalance {
             if (currExpense.getDate() == date) {
                 currExpenses.add(currExpense);
             }
+        }
+
+        return currExpenses;
+    }
+
+    /**
+     * Returns the expenses of a month
+     * 
+     * @param date of type LocalDate
+     * 
+     * @return Expenses, which were done at the month, specified in "date".
+     * Returned as a HashSet.
+     */
+    public Set<Expense> getExpensesForThisMonth(LocalDate date) {
+        Set<Expense> currExpenses = new HashSet<Expense>();
+
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        int day = 1;
+
+        LocalDate currDate = LocalDate.of(year, month, day);
+        while (day <= 31) {
+            currExpenses.addAll(getExpensesForThisDay(currDate));
+            day++;
+            currDate = LocalDate.of(year, month, day);
         }
 
         return currExpenses;
