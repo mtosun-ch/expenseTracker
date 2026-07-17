@@ -7,7 +7,7 @@ public class DayAccountBalance extends AccountBalance {
     int expenses = 0;
 
     // Creates map from unique expense id's to the expense's cateogory
-    Map<Integer, Expense.Category> catMap = new HashMap<Integer, Expense.Category>();
+    Map<Long, Expense.Category> catMap = new HashMap<Long, Expense.Category>();
 
     /**
      * Adds a new expense to the total expense and adds map to catMap
@@ -23,6 +23,6 @@ public class DayAccountBalance extends AccountBalance {
         }
 
         expenses = expenses + amount;
-        catMap.put(e.getAndSetID(), e.getCategory());
+        catMap.put(e.getUniqueID(), e.getCategory());
     }
 }

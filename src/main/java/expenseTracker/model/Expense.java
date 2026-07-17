@@ -44,4 +44,16 @@ public class Expense {
         this.description = description;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public BigDecimal getAmount() {
+        return this.amount;
+    }
+
 }
