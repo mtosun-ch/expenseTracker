@@ -15,7 +15,9 @@ public class Expense {
         setDate();
     }
 
-    Expense() {}
+    Expense() {
+        setDate();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
