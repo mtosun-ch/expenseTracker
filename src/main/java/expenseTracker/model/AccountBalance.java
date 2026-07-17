@@ -1,6 +1,7 @@
 package expenseTracker.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 public class AccountBalance {
@@ -29,5 +30,25 @@ public class AccountBalance {
         }
 
         amount = currAmount;
+    }
+
+    /**
+     * Returns the expenses of given a date
+     * 
+     * @param date of type LocalDate
+     * 
+     * @return Expenses, which were done at "date". Returned as a HashSet.
+     */
+    public Set<Expense> getExpensesForThisDay(LocalDate date) {
+        Set<Expense> currExpenses = new HashSet<Expense>();
+        for (Long l: expenseMap.keySet()) {
+            Expense currExpense = expenseMap.get(l);
+
+            if (currExpense.getDate() == date) {
+                currExpenses.add(currExpense);
+            }
+        }
+
+        return currExpenses;
     }
 }
