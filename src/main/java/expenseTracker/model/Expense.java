@@ -48,7 +48,17 @@ public class Expense {
         return this.description;
     }
 
+    /**
+     * Sets the amount as given in the input
+     * @param amount of expense; has to be non-negative
+     * 
+     * @throws IllegalArgumentException if amount is negative
+     */
     public void setAmount(BigDecimal amount) {
+        if (amount.intValue() < 0) {
+            throw new IllegalArgumentException();
+        }
+        
         this.amount = amount;
     }
 
