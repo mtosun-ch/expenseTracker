@@ -1,6 +1,8 @@
 package expenseTracker.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +26,12 @@ public class ExpenseController {
     public List<Expense> getAllExpenses() {
         return expenseRepository.findAll();
     }
+
+    @PostMapping()
+    public String saveExpense(@RequestBody Expense e) {
+        Expense saved = expenseRepository.save(e);
+        return "Expense with ID " + saved.getUniqueID() + " added successfully.";
+    }
+
 
 }
