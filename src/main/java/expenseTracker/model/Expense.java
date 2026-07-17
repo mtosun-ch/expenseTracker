@@ -60,6 +60,7 @@ public class Expense {
 
     /**
      * Sets the amount as given in the input
+     * 
      * @param amount of expense; has to be non-negative
      * 
      * @throws IllegalArgumentException if amount is negative
