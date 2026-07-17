@@ -1,5 +1,28 @@
 package expenseTracker.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import expenseTracker.model.Expense;
+import expenseTracker.repository.ExpenseRepository;
+
+import java.util.*;
+
+@RestController
+@RequestMapping("/api/expenses")
+
 public class ExpenseController {
-    
+
+    private ExpenseRepository expenseRepository;
+
+    public ExpenseController(ExpenseRepository expenseRepository) {
+        this.expenseRepository = expenseRepository;
+    }
+
+    @GetMapping
+    public List<Expense> getAllExpenses() {
+        return expenseRepository.findAll();
+    }
+
 }
