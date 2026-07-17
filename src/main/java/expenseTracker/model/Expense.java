@@ -1,11 +1,19 @@
 package expenseTracker.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 
 @Entity
 public class Expense {
+
+    Expense(BigDecimal amount, String description, Category category) {
+        this.amount = amount;
+        this.description = description;
+        this.category = category;
+        setDate();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +25,8 @@ public class Expense {
     enum Category { SHOPPING, BILLS, GROCERIES, RENT, CAR, FREE_TIME }
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    private LocalDate date;
 
     public long getUniqueID() {
         return id;
@@ -64,6 +74,14 @@ public class Expense {
 
     public BigDecimal getAmount() {
         return this.amount;
+    }
+
+    public void setDate() {
+        date = LocalDate.now();
+    }
+
+    public LocalDate getDate() {
+        return this.date;
     }
 
 }
