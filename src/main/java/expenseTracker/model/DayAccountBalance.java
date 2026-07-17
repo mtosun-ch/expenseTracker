@@ -12,4 +12,8 @@ public class DayAccountBalance extends AccountBalance {
     public void addExpense(Expense e) {
         expenseMap.put(e.getUniqueID(), e);
     }
+
+    public void removeExpense(Expense e) {
+        expenseMap.remove(e.getUniqueID());
+    }
 }
