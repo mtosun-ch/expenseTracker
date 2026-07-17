@@ -53,7 +53,20 @@ public class AccountBalance {
     }
 
     /**
-     * Returns the expenses of a month
+     * Calculates the amount of a given date. Uses getExpensesForThisDay and
+     * calculateExpeneses methods.
+     * 
+     * @param date of type LocalDate. Uses to calculate the amount on date.
+     * 
+     * @return amount, which were resulted by expenses.
+     */
+    public BigDecimal getAmountForThisDay(LocalDate date) {
+        Set<Expense> expenses = new HashSet<Expense>(getExpensesForThisDay(date));
+        return calculateExpenses(expenses);
+    }
+
+    /**
+     * Returns the expenses of a month. Uses the getExpensesForThisDay method.
      * 
      * @param date of type LocalDate
      * 
@@ -75,6 +88,20 @@ public class AccountBalance {
         }
 
         return currExpenses;
+    }
+
+
+    /**
+     * Calculates the amount of a given month. Uses getExpensesForThisMonth and
+     * calculateExpeneses methods.
+     * 
+     * @param date of type LocalDate. Uses to calculate the amount on month given in date.
+     * 
+     * @return amount, which were resulted by expenses.
+     */
+    public BigDecimal getAmountForThisMonth(LocalDate date) {
+        Set <Expense> expenses = new HashSet<Expense>(getExpensesForThisMonth(date));
+        return calculateExpenses(expenses);
     }
 
     /**
