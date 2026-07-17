@@ -12,13 +12,13 @@ public class AccountBalance {
     Map<Long, Expense> expenseMap = new HashMap<Long, Expense>();
 
     public void addExpense(Expense e) {
-        updateAmount();
         expenseMap.put(e.getUniqueID(), e);
+        updateAmount();
     }
 
     public void removeExpense(Expense e) {
-        updateAmount();
         expenseMap.remove(e.getUniqueID());
+        updateAmount();
     }
 
     public void updateAmount() {
@@ -44,7 +44,7 @@ public class AccountBalance {
         for (Long l: expenseMap.keySet()) {
             Expense currExpense = expenseMap.get(l);
 
-            if (currExpense.getDate() == date) {
+            if (currExpense.getDate().equals(date)) {
                 currExpenses.add(currExpense);
             }
         }
@@ -81,15 +81,16 @@ public class AccountBalance {
         int day = 1;
 
         LocalDate currDate = LocalDate.of(year, month, day);
-        while (day <= 31) {
-            currExpenses.addAll(getExpensesForThisDay(currDate));
-            day++;
-            currDate = LocalDate.of(year, month, day);
-        }
+        try {
+            while (day <= 31) {
+                currExpenses.addAll(getExpensesForThisDay(currDate));
+                day++;
+                currDate = LocalDate.of(year, month, day);
+            }
+        } catch(Exception e) {}
 
         return currExpenses;
     }
-
 
     /**
      * Calculates the amount of a given month. Uses getExpensesForThisMonth and

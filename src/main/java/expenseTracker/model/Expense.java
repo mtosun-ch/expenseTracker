@@ -9,8 +9,8 @@ import jakarta.persistence.*;
 public class Expense {
 
     Expense(BigDecimal amount, String description, Category category) {
-        this.amount = amount;
-        this.description = description;
+        setAmount(amount);
+        setDescription(description);
         this.category = category;
         setDate();
     }
@@ -68,7 +68,7 @@ public class Expense {
      * @throws IllegalArgumentException if amount is negative
      */
     public void setAmount(BigDecimal amount) {
-        if (amount.intValue() < 0) {
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException();
         }
         
