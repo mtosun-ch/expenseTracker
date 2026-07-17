@@ -76,4 +76,23 @@ public class AccountBalance {
 
         return currExpenses;
     }
+
+    /**
+     * Given a set of expenses, returns the total amount of these expenses
+     * 
+     * @param expenses of type "Set". The empty set is allowed. Should be non-null
+     * 
+     * @return the total amount of expenses in BigDecimal
+     * 
+     * @throws NullPointerException if expenses is null
+     */
+    public BigDecimal calculateExpenses(Set<Expense> expenses) {
+        BigDecimal totalAmount = BigDecimal.ZERO;
+
+        for (Expense e : expenses) {
+            totalAmount = totalAmount.add(e.getAmount());
+        }
+
+        return totalAmount;
+    }
 }
