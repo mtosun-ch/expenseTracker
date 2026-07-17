@@ -6,23 +6,10 @@ public class DayAccountBalance extends AccountBalance {
     // By default, expenses are initialized to 0
     int expenses = 0;
 
-    // Creates map from unique expense id's to the expense's cateogory
-    Map<Long, Expense.Category> catMap = new HashMap<Long, Expense.Category>();
+    // Creates map from unique expense id's to its expense
+    Map<Long, Expense> expenseMap = new HashMap<Long, Expense>();
 
-    /**
-     * Adds a new expense to the total expense and adds map to catMap
-     * 
-     * @param amount the amount to be added too; must be non-negative
-     * @param e the type of expense
-     * 
-     * @throws IllegalArgumentException if amount is negative
-     */
-    public void addExpense(int amount, Expense e) {
-        if (amount < 0) {
-            throw new IllegalArgumentException();
-        }
-
-        expenses = expenses + amount;
-        catMap.put(e.getUniqueID(), e.getCategory());
+    public void addExpense(Expense e) {
+        expenseMap.put(e.getUniqueID(), e);
     }
 }
