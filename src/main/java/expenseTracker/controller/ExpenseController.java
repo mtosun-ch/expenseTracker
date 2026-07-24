@@ -50,6 +50,10 @@ public class ExpenseController {
     public String updateExpense(@PathVariable("id") long id, @RequestBody Expense e) {
         try {
             Expense currExpense = expenseRepository.findById(id).get();
+            currExpense.setAmount(e.getAmount());
+            currExpense.setCategory(e.getCategory());
+            currExpense.setDate((e.getDate()));
+            currExpense.setDescription(e.getDescription());
             expenseRepository.save(currExpense);
             return "Expense with ID " + id + " updated successfully.\n";
         } catch(Exception e1) {
