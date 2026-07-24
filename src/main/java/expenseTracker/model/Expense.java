@@ -3,6 +3,8 @@ package expenseTracker.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.cglib.core.Local;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -83,6 +85,10 @@ public class Expense {
 
     public void setDate() {
         date = LocalDate.now();
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public LocalDate getDate() {
