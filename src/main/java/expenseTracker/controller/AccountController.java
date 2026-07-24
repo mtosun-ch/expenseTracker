@@ -41,4 +41,16 @@ public class AccountController {
         return accountBalance.getAmountForThisMonth(date);
     }
 
+    @GetMapping("/day")
+    public BigDecimal getDayBalance(@RequestParam("day") LocalDate date) {
+        List<Expense> allExpenses = expenseRepository.findAll(); 
+
+        AccountBalance accountBalance = new AccountBalance();
+        for (Expense e : allExpenses) {
+            accountBalance.addExpense(e);
+        }
+
+        return accountBalance.getAmountForThisDay(date);
+    }
+
 }
