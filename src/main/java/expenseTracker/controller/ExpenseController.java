@@ -33,13 +33,17 @@ public class ExpenseController {
     @PostMapping()
     public String saveExpense(@RequestBody Expense e) {
         Expense saved = expenseRepository.save(e);
-        return "Expense with ID " + saved.getUniqueID() + " added successfully.";
+        return "Expense with ID " + saved.getUniqueID() + " added successfully.\n";
     }
 
     @DeleteMapping("/{id}")
     public String deleteExpense(@PathVariable("id") long id) {
+        if (expenseRepository.findById(id).isEmpty()) {
+            return "Expense with ID " + id + " does not exist.\n";
+        }
+
         expenseRepository.deleteById(id);
-        return "Expense with ID " + id + " deleted successfully.";
+        return "Expense with ID " + id + " deleted successfully.\n";
     }
 
     @PutMapping("/{id}")
@@ -47,9 +51,9 @@ public class ExpenseController {
         try {
             Expense currExpense = expenseRepository.findById(id).get();
             expenseRepository.save(currExpense);
-            return "Expense with ID " + id + " updated successfully.";
+            return "Expense with ID " + id + " updated successfully.\n";
         } catch(Exception e1) {
-            return "Expense with ID " + id + " does not exist.";
+            return "Expense with ID " + id + " does not exist.\n";
         }
     }
 
