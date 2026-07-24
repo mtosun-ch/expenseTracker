@@ -48,7 +48,7 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public String updateExpense(@PathVariable("id") long id, @RequestBody Expense e) {
+    public ResponseEntity<String> updateExpense(@PathVariable("id") long id, @RequestBody Expense e) {
         try {
             Expense currExpense = expenseRepository.findById(id).get();
             currExpense.setAmount(e.getAmount());
@@ -56,9 +56,9 @@ public class ExpenseController {
             currExpense.setDate((e.getDate()));
             currExpense.setDescription(e.getDescription());
             expenseRepository.save(currExpense);
-            return "Expense with ID " + id + " updated successfully.\n";
+            return ResponseEntity.status(HttpStatus.OK).body("Expense with ID " + id + " updated successfully.\n");
         } catch(Exception e1) {
-            return "Expense with ID " + id + " does not exist.\n";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Expense with ID " + id + " does not exist.\n");
         }
     }
 
