@@ -1,6 +1,7 @@
 package expenseTracker.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,8 @@ import java.util.*;
 
 @RestController
 @RequestMapping("api/account")
+@CrossOrigin(origins = "*")
+
 public class AccountController {
     
     private ExpenseRepository expenseRepository;
