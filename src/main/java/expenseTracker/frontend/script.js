@@ -55,11 +55,12 @@ expenseForm.addEventListener("submit", (event) => {
         throw new Error("Negative values are not allowed.");
     }
     let categoryValue = document.getElementById("category").value;
+    let dateValue = document.getElementById("date").value;
 
     fetch('http://localhost:8080/api/expenses', {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
-        body: JSON.stringify({amount: amountValue, description: descriptionValue, category: categoryValue})
+        body: JSON.stringify({amount: amountValue, description: descriptionValue, category: categoryValue, date: dateValue})
     })
     .then( () => loadExpense());
 });
