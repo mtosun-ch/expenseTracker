@@ -1,4 +1,10 @@
 let expenseList = document.getElementById("expense-list");
+let expenseForm = document.getElementById("expense-form");
+
+// set init date to today's date
+let date = new Date();
+let currDate = date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, 0) + "-" + date.getDate().toString().padStart(2, 0);
+document.getElementById("date").value = currDate;
 
 // Load at initialization
 fetch('http://localhost:8080/api/expenses')
@@ -36,11 +42,18 @@ function loadExpense() {
 }
 
 // Add entry to database
-let expenseForm = document.getElementById("expense-form");
 expenseForm.addEventListener("submit", (event) => {
     event.preventDefault();
     let descriptionValue = document.getElementById("description").value;
+    if (descriptionValue.length > 100) {
+        alert("Maximum length of 100 characters exceeded.")
+        throw new Error("Maximum length of 100 characters exceeded.");
+    }
     let amountValue = document.getElementById("amount").value;
+    if (amountValue < 0) {
+        alert("Negative values are not allowed.");
+        throw new Error("Negative values are not allowed.");
+    }
     let categoryValue = document.getElementById("category").value;
 
     fetch('http://localhost:8080/api/expenses', {
@@ -50,3 +63,4 @@ expenseForm.addEventListener("submit", (event) => {
     })
     .then( () => loadExpense());
 });
+
