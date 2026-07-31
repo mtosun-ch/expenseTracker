@@ -17,6 +17,13 @@ public class Expense {
         setDate();
     }
 
+    Expense(BigDecimal amount, String description, Category category, LocalDate date) {
+        setAmount(amount);
+        setDescription(description);
+        this.category = category;
+        setDate(date);
+    }
+
     Expense() {
         setDate();
     }
