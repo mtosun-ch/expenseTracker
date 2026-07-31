@@ -38,7 +38,7 @@ public class AccountController {
      * was made, are considered.
      */
     @GetMapping("/year")
-    public Map<Integer, BigDecimal> getYearlyBalance() {
+    public Map<Integer, BigDecimal> getYearlyMapBalance() {
         List<Expense> allExpenses = expenseRepository.findAll();
         Map<Integer, BigDecimal> currMap = new HashMap<Integer, BigDecimal>();
 
