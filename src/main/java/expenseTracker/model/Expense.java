@@ -28,7 +28,7 @@ public class Expense {
     private String description;
     private BigDecimal amount;
 
-    enum Category { SHOPPING, BILLS, GROCERIES, RENT, CAR, FREE_TIME }
+    enum Category { SHOPPING, BILLS, GROCERIES, RENT, CAR, FREE_TIME, OTHERS }
     @Enumerated(EnumType.STRING)
     private Category category;
 
