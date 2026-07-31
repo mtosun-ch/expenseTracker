@@ -32,6 +32,34 @@ public class AccountController {
         this.expenseRepository = expenseRepository;
     }
 
+    /**
+     * Creates a mapping for every year, where an expense was made.
+     * @return a mapping from Integer to BigDecimal. Only years, where an expense
+     * was made, are considered.
+     */
+    @GetMapping("/year")
+    public Map<Integer, BigDecimal> getYearlyBalance() {
+        List<Expense> allExpenses = expenseRepository.findAll();
+        Map<Integer, BigDecimal> currMap = new HashMap<Integer, BigDecimal>();
+
+        for (Expense e : allExpenses) {
+            BigDecimal amount = e.getAmount();
+            int currYear = e.getDate().getYear();
+            
+            BigDecimal currSum = currMap.get(currYear);
+            // Mapping has not existed yet
+            if (currSum == null) {
+                currMap.put(currYear, amount);
+            }
+            else {
+                currMap.put(currYear, currSum.add(amount));
+            }
+        }
+
+        return currMap;
+    }
+
+    //Returns the balance of a given month
     @GetMapping("/month")
     public BigDecimal getMonthBalance(@RequestParam("date") LocalDate date) {
         List<Expense> allExpenses = expenseRepository.findAll(); 
@@ -44,6 +72,7 @@ public class AccountController {
         return accountBalance.getAmountForThisMonth(date);
     }
 
+    // Returns the balance of a given day
     @GetMapping("/day")
     public BigDecimal getDayBalance(@RequestParam("day") LocalDate date) {
         List<Expense> allExpenses = expenseRepository.findAll(); 
