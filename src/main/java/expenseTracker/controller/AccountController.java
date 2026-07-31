@@ -59,6 +59,11 @@ public class AccountController {
         return currMap;
     }
 
+    @GetMapping("/month")
+    public Map<Integer, BigDecimal> getMonthlyMapBalance() {
+        return null;
+    }
+
     //Returns the balance of a given month
     @GetMapping("/month")
     public BigDecimal getMonthBalance(@RequestParam("date") LocalDate date) {
