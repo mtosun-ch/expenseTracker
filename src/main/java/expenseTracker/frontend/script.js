@@ -6,9 +6,6 @@ fetch('http://localhost:8080/api/expenses')
 .then(data => {
     for (let i = 0; i < data.length; i++) {
         let currElement = document.createElement("li");
-        if (expenseList.contains(currElement)) {
-            continue;
-        }
         currElement.textContent = data[i].description;
         expenseList.appendChild(currElement);
     }
@@ -21,9 +18,6 @@ function loadExpenses() {
     .then(data => {
         for (let i = 0; i < data.length; i++) {
             let currElement = document.createElement("li");
-            if (expenseList.contains(currElement)) {
-                continue;
-            }
             currElement.textContent = data[i].description;
             expenseList.appendChild(currElement);
         }
