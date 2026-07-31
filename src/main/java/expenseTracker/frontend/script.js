@@ -10,15 +10,15 @@ fetch('http://localhost:8080/api/expenses')
     });
 
 let expenseForm = document.getElementById("expense-form");
-let descriptionValue; let amountValue; let categoryValue;
 expenseForm.addEventListener("submit", (event) => {
-    descriptionValue = document.getElementById("description").value;
-    amountValue = document.getElementById("amount").value;
-    categoryValue = document.getElementById("category").value;
+    event.preventDefault();
+    let descriptionValue = document.getElementById("description").value;
+    let amountValue = document.getElementById("amount").value;
+    let categoryValue = document.getElementById("category").value;
+
+    fetch('http://localhost:8080/api/expenses', {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({amount: amountValue, description: descriptionValue, category: categoryValue})
+    });
 });
-
-fetch('http://localhost:8080/api/expenses', {
-    method: 'POST',
-    headers: {'Content-type': 'application/json'},
-
-})
