@@ -37,7 +37,7 @@ public class AccountController {
      * @return a mapping from Integer to BigDecimal. Only years, where an expense
      * was made, are considered.
      */
-    @GetMapping("/year")
+    @GetMapping("/yearMapping")
     public Map<Integer, BigDecimal> getYearlyMapBalance() {
         List<Expense> allExpenses = expenseRepository.findAll();
         Map<Integer, BigDecimal> currMap = new HashMap<Integer, BigDecimal>();
@@ -59,13 +59,48 @@ public class AccountController {
         return currMap;
     }
 
-    @GetMapping("/month")
-    public Map<Integer, BigDecimal> getMonthlyMapBalance() {
-        return null;
+    /**
+     * Creates a mapping for every month on a given year.
+     * @return a mapping from Integer to BigDecimal. Every month is considered.
+     * Months, where no expense was made, are mapped to BigDecimal.ZERO
+     */ 
+    @GetMapping("/monthMapping")
+    public Map<Integer, BigDecimal> getMonthlyMapBalance(@RequestParam("year") int year) {
+        List<Expense> allExpenses = expenseRepository.findAll();
+        Map<Integer, BigDecimal> currMap = new HashMap<Integer, BigDecimal>();
+
+        for (Expense currExpense : allExpenses) {
+            BigDecimal amount = currExpense.getAmount();
+            int currYear = currExpense.getDate().getYear();
+            if (currYear != year) {
+                continue;
+            }
+
+            int currMonth = currExpense.getDate().getMonthValue();
+
+            BigDecimal currSum = currMap.get(currMonth);
+            // Mapping has not existed yet
+            if (currSum == null) {
+                currMap.put(currMonth, amount);
+            }
+            else {
+                currMap.put(currMonth, currSum.add(amount));
+            }
+        }
+
+        // Creates for every non-mapped month a mapping
+        for (int i = 1; i <= 12; i++) {
+            BigDecimal currSum = currMap.get(i);
+            if (currSum == null) {
+                currMap.put(i, BigDecimal.ZERO);
+            }
+        }
+
+        return currMap;
     }
 
     //Returns the balance of a given month
-    @GetMapping("/month")
+    @GetMapping("/monthBalance")
     public BigDecimal getMonthBalance(@RequestParam("date") LocalDate date) {
         List<Expense> allExpenses = expenseRepository.findAll(); 
 
@@ -78,7 +113,7 @@ public class AccountController {
     }
 
     // Returns the balance of a given day
-    @GetMapping("/day")
+    @GetMapping("/dayBalance")
     public BigDecimal getDayBalance(@RequestParam("day") LocalDate date) {
         List<Expense> allExpenses = expenseRepository.findAll(); 
 
