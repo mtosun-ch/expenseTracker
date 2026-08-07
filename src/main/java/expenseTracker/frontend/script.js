@@ -1,5 +1,7 @@
 let expenseList = document.getElementById("expense-list");
 let expenseForm = document.getElementById("expense-form");
+let yearlyList = document.getElementById("yearly-list");
+let monthlyList = document.getElementById("monthly-list");
 
 // set init date to today's date
 let date = new Date();
@@ -8,18 +10,6 @@ document.getElementById("date").value = currDate;
 
 // Load at initialization
 fetch('http://localhost:8080/api/expenses')
-.then(response => response.json())
-.then(data => {
-    for (let i = 0; i < data.length; i++) {
-        let currElement = document.createElement("li");
-        currElement.textContent = data[i].description;
-        expenseList.appendChild(currElement);
-    }
-});
-
-// Load all entries of data
-function loadExpenses() {
-    fetch('http://localhost:8080/api/expenses')
     .then(response => response.json())
     .then(data => {
         for (let i = 0; i < data.length; i++) {
@@ -28,18 +18,57 @@ function loadExpenses() {
             expenseList.appendChild(currElement);
         }
     });
+
+// Load all entries of data
+function loadExpenses() {
+    fetch('http://localhost:8080/api/expenses')
+        .then(response => response.json())
+        .then(data => {
+            for (let i = 0; i < data.length; i++) {
+                let currElement = document.createElement("li");
+                currElement.textContent = data[i].description;
+                expenseList.appendChild(currElement);
+            }
+        });
 }
 
 // Load last entry of data
 function loadExpense() {
     fetch('http://localhost:8080/api/expenses')
+        .then(response => response.json())
+        .then(data => {
+            let currElement = document.createElement("li");
+            currElement.textContent = data[data.length - 1].description;
+            expenseList.appendChild(currElement);
+        })
+}
+
+fetch('http://localhost:8080/api/account/yearlyMapping')
     .then(response => response.json())
     .then(data => {
-        let currElement = document.createElement("li");
-        currElement.textContent = data[data.length - 1].description;
-        expenseList.appendChild(currElement);
-    })
-}
+        let map = Object.entries(data);
+        map.forEach(element => {
+            let year = element[0];
+            let total = element[1];
+            let currElement = document.createElement("li");
+            currElement.textContent = year + ": " + total;
+            yearlyList.appendChild(currElement);
+            currElement.addEventListener("click", () => {
+                fetch('http://localhost:8080/api/account/monthlyMapping?year=' + year)
+                    .then(reponse => reponse.json())
+                    .then(data => {
+                        let monthMap = Object.entries(data);
+                        monthMap.forEach(element => {
+                            let month = element[0];
+                            let total = element[1];
+                            let monthlyElement = document.createElement("li");
+                            monthlyElement.textContent = month + ": " + total;
+                            monthlyList.appendChild(monthlyElement);
+                        })
+                    })
+            })
+        });
+    });
 
 // Add entry to database
 expenseForm.addEventListener("submit", (event) => {
@@ -63,9 +92,14 @@ expenseForm.addEventListener("submit", (event) => {
 
     fetch('http://localhost:8080/api/expenses', {
         method: 'POST',
-        headers: {'Content-type': 'application/json'},
-        body: JSON.stringify({amount: amountValue, description: descriptionValue, category: categoryValue, date: dateValue})
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({ amount: amountValue, description: descriptionValue, category: categoryValue, date: dateValue })
     })
-    .then( () => loadExpense());
+        .then(() => loadExpense());
 });
 
+
+// Testing
+// fetch('http://localhost:8080/api/account/monthlyMapping?year=2025')
+//     .then(response => response.json())
+//     .then(data => console.log(data))
