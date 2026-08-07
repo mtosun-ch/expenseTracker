@@ -43,7 +43,7 @@ function loadExpense() {
         })
 }
 
-// Load mapping at initialization
+// Load mappings at initialization
 fetch('http://localhost:8080/api/account/yearlyMapping')
     .then(response => response.json())
     .then(data => {
@@ -64,7 +64,7 @@ fetch('http://localhost:8080/api/account/yearlyMapping')
         });
     });
 
-// Load all mappings from the data
+// Load all mappings from data
 function loadMappings(year) {
     fetch('http://localhost:8080/api/account/monthlyMapping?year=' + year)
         .then(reponse => reponse.json())
@@ -78,6 +78,20 @@ function loadMappings(year) {
                 monthlyList.appendChild(monthlyElement);
             })
         })
+}
+
+// Load mapping from given month, given a year 
+// (currently not used)
+function loadMapping(year, month) {
+    fetch('http://localhost:8080/api/expenses')
+        .then(response => response.json())
+        .then(data => {
+            let yearlyElement = document.createElement("li");
+            let monthlyElement = document.createElement("li");
+            yearlyList.appendChild(yearlyElement);
+            monthlyElement.appendChild(monthlyElement);
+        })
+
 }
 
 // Add entry to database
@@ -105,7 +119,10 @@ expenseForm.addEventListener("submit", (event) => {
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ amount: amountValue, description: descriptionValue, category: categoryValue, date: dateValue })
     })
-        .then(() => loadExpense());
+        .then(() => {
+            loadExpense();
+            location.reload();
+        });
 });
 
 
