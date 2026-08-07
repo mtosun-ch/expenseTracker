@@ -64,7 +64,7 @@ fetch('http://localhost:8080/api/account/yearlyMapping')
         });
     });
 
-// Load all mappings from data
+// Load all monthly mappings from data in a given year
 function loadMappings(year) {
     fetch('http://localhost:8080/api/account/monthlyMapping?year=' + year)
         .then(reponse => reponse.json())
