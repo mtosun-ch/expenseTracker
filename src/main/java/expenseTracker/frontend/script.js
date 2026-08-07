@@ -43,6 +43,7 @@ function loadExpense() {
         })
 }
 
+// Load mapping at initialization
 fetch('http://localhost:8080/api/account/yearlyMapping')
     .then(response => response.json())
     .then(data => {
@@ -53,22 +54,31 @@ fetch('http://localhost:8080/api/account/yearlyMapping')
             let currElement = document.createElement("li");
             currElement.textContent = year + ": " + total;
             yearlyList.appendChild(currElement);
+            let set = 0;
             currElement.addEventListener("click", () => {
-                fetch('http://localhost:8080/api/account/monthlyMapping?year=' + year)
-                    .then(reponse => reponse.json())
-                    .then(data => {
-                        let monthMap = Object.entries(data);
-                        monthMap.forEach(element => {
-                            let month = element[0];
-                            let total = element[1];
-                            let monthlyElement = document.createElement("li");
-                            monthlyElement.textContent = month + ": " + total;
-                            monthlyList.appendChild(monthlyElement);
-                        })
-                    })
+                if (set == 0) {
+                    set = 1;
+                    loadMappings(year);
+                }
             })
         });
     });
+
+// Load all mappings from the data
+function loadMappings(year) {
+    fetch('http://localhost:8080/api/account/monthlyMapping?year=' + year)
+        .then(reponse => reponse.json())
+        .then(data => {
+            let monthMap = Object.entries(data);
+            monthMap.forEach(element => {
+                let month = element[0];
+                let total = element[1];
+                let monthlyElement = document.createElement("li");
+                monthlyElement.textContent = month + ": " + total;
+                monthlyList.appendChild(monthlyElement);
+            })
+        })
+}
 
 // Add entry to database
 expenseForm.addEventListener("submit", (event) => {
