@@ -61,6 +61,7 @@ public class AccountController {
 
     /**
      * Creates a mapping for every month on a given year.
+     * @param year given year
      * @return a mapping from Integer to BigDecimal. Every month is considered.
      * Months, where no expense was made, are mapped to BigDecimal.ZERO
      */ 
@@ -90,6 +91,56 @@ public class AccountController {
 
         // Creates for every non-mapped month a mapping
         for (int i = 1; i <= 12; i++) {
+            BigDecimal currSum = currMap.get(i);
+            if (currSum == null) {
+                currMap.put(i, BigDecimal.ZERO);
+            }
+        }
+
+        return currMap;
+    }
+
+    /**
+     * Creates a mapping for every day in a given month, in a given year 
+     * @param year the year given
+     * @param month the month given where 1 <= month <= 12
+     * @return a mapping from Integer to BigDecimal. Every day in a month is considered.
+     * Days, where no expense was made, are mapped to BigDecimal.ZERO
+     * @throws IllegalArgumentException if 1 <= month <= 12 does not hold
+     */
+    @GetMapping("/dailyMapping")
+    public Map<Integer, BigDecimal> getDailyMapBalance(@RequestParam("year") int year, @RequestParam("month") int month) {
+        if (!(1 <= month && month <= 12)) {
+            throw new IllegalArgumentException("Month does not exist.");
+        }
+        List<Expense> allExpenses = expenseRepository.findAll();
+        Map<Integer, BigDecimal> currMap = new HashMap<Integer, BigDecimal>();
+
+        for (Expense currExpense : allExpenses) {
+            BigDecimal amount = currExpense.getAmount();
+            int currYear = currExpense.getDate().getYear();
+            int currMonth = currExpense.getDate().getMonthValue();
+
+            if (currYear != year && currMonth != month) {
+                continue;
+            }
+
+            int currDay = currExpense.getDate().getDayOfMonth();
+
+            BigDecimal currSum = currMap.get(currDay);
+            // Mapping has not existed yet
+            if (currSum == null) {
+                currMap.put(currDay, amount);
+            }
+            else {
+                currMap.put(currDay, currSum.add(amount));
+            }
+        }
+
+        // Creates for every non-mapped day a mapping
+        LocalDate date = LocalDate.of(year, month, 1);
+        int monthLength = date.lengthOfMonth();
+        for (int i = 1; i <= monthLength; i++) {
             BigDecimal currSum = currMap.get(i);
             if (currSum == null) {
                 currMap.put(i, BigDecimal.ZERO);
