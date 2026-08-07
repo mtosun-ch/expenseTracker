@@ -56,6 +56,10 @@ expenseForm.addEventListener("submit", (event) => {
     }
     let categoryValue = document.getElementById("category").value;
     let dateValue = document.getElementById("date").value;
+    if (dateValue > currDate) {
+        alert("Dates in the future are not allowed");
+        throw new Error("Dates in the future are not allowed");
+    }
 
     fetch('http://localhost:8080/api/expenses', {
         method: 'POST',
