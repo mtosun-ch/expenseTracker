@@ -37,7 +37,7 @@ public class AccountController {
      * @return a mapping from Integer to BigDecimal. Only years, where an expense
      * was made, are considered.
      */
-    @GetMapping("/yearMapping")
+    @GetMapping("/yearlyMapping")
     public Map<Integer, BigDecimal> getYearlyMapBalance() {
         List<Expense> allExpenses = expenseRepository.findAll();
         Map<Integer, BigDecimal> currMap = new HashMap<Integer, BigDecimal>();
@@ -65,7 +65,7 @@ public class AccountController {
      * @return a mapping from Integer to BigDecimal. Every month is considered.
      * Months, where no expense was made, are mapped to BigDecimal.ZERO
      */ 
-    @GetMapping("/monthMapping")
+    @GetMapping("/monthlyMapping")
     public Map<Integer, BigDecimal> getMonthlyMapBalance(@RequestParam("year") int year) {
         List<Expense> allExpenses = expenseRepository.findAll();
         Map<Integer, BigDecimal> currMap = new HashMap<Integer, BigDecimal>();
