@@ -150,9 +150,9 @@ public class AccountController {
         return currMap;
     }
 
-    //Returns the balance of a given month
+    //Returns the balance of a given month, given a year
     @GetMapping("/monthBalance")
-    public BigDecimal getMonthBalance(@RequestParam("date") LocalDate date) {
+    public BigDecimal getMonthBalance(@RequestParam("year") int year, @RequestParam("month") int month) {
         List<Expense> allExpenses = expenseRepository.findAll(); 
 
         AccountBalance accountBalance = new AccountBalance();
@@ -160,10 +160,10 @@ public class AccountController {
             accountBalance.addExpense(e);
         }
 
-        return accountBalance.getAmountForThisMonth(date);
+        return accountBalance.getAmountForThisMonth(LocalDate.of(year, month, 1));
     }
 
-    // Returns the balance of a given day
+    // Returns the balance of a given date
     @GetMapping("/dayBalance")
     public BigDecimal getDayBalance(@RequestParam("day") LocalDate date) {
         List<Expense> allExpenses = expenseRepository.findAll(); 
