@@ -4,6 +4,21 @@ let yearlyList = document.getElementById("yearly-list");
 let monthlyList = document.getElementById("monthly-list");
 let dailyList = document.getElementById("daily-list");
 
+let monthlyNameMap = new Map([
+    [1, "January"],
+    [2, "February"],
+    [3, "March"],
+    [4, "April"],
+    [5, "May"],
+    [6, "June"],
+    [7, "July"],
+    [8, "August"],
+    [9, "September"],
+    [10, "October"],
+    [11, "November"],
+    [12, "December"]    
+]);
+
 // set init date to today's date
 let date = new Date();
 let currDate = date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, 0) + "-" + date.getDate().toString().padStart(2, 0);
@@ -92,7 +107,8 @@ function loadMonthlyMappings(year) {
                 let month = element[0];
                 let total = element[1];
                 let monthlyElement = document.createElement("li");
-                monthlyElement.textContent = month + ": " + total;
+                console.log("Month: " + month);
+                monthlyElement.textContent = monthlyNameMap.get(Number(month)) + ": " + total;
                 monthlyList.appendChild(monthlyElement);
                 let set = 0;
                 monthlyElement.addEventListener("click", () => {
