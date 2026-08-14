@@ -2,6 +2,7 @@ let expenseList = document.getElementById("expense-list");
 let expenseForm = document.getElementById("expense-form");
 let yearlyList = document.getElementById("yearly-list");
 let monthlyList = document.getElementById("monthly-list");
+let dailyList = document.getElementById("daily-list");
 
 // set init date to today's date
 let date = new Date();
@@ -43,7 +44,7 @@ function loadExpense() {
         })
 }
 
-// Load mappings at initialization
+// Load mappings with time at initialization
 fetch('http://localhost:8080/api/account/yearlyMapping')
     .then(response => response.json())
     .then(data => {
@@ -58,14 +59,14 @@ fetch('http://localhost:8080/api/account/yearlyMapping')
             currElement.addEventListener("click", () => {
                 if (set == 0) {
                     set = 1;
-                    loadMappings(year);
+                    loadMonthlyMappings(year);
                 }
             })
         });
     });
 
 // Load all monthly mappings from data in a given year
-function loadMappings(year) {
+function loadMonthlyMappings(year) {
     fetch('http://localhost:8080/api/account/monthlyMapping?year=' + year)
         .then(reponse => reponse.json())
         .then(data => {
@@ -76,8 +77,31 @@ function loadMappings(year) {
                 let monthlyElement = document.createElement("li");
                 monthlyElement.textContent = month + ": " + total;
                 monthlyList.appendChild(monthlyElement);
+                let set = 0;
+                monthlyElement.addEventListener("click", () => {
+                    if (set == 0) {
+                        set = 1;
+                        loadDailyMappings(year, month);
+                    }
+                })
             })
         })
+}
+
+// Load all daily mappings from data in a given month, given a year
+function loadDailyMappings(year, month) {
+    fetch('http://localhost:8080/api/account/dailyMapping?year=' + year + '&month=' + month)
+    .then(response => response.json())
+    .then(data => {
+        let dailyMap = Object.entries(data);
+        dailyMap.forEach(element => {
+            let day = element[0];
+            let total = element[1];
+            let dailyElement = document.createElement("li");
+            dailyElement.textContent = day + ": " + total;
+            dailyList.appendChild(dailyElement);
+        })
+    })
 }
 
 // Add entry to database
