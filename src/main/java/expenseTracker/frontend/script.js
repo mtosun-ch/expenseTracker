@@ -59,7 +59,7 @@ function loadExpense() {
         })
 }
 
-// Adds the element to expense-list and loads Delete button
+// Adds the element to expense-list, loads Delete button
 // and reloads window
 function addExpenseList(currElement, id) {
     expenseList.appendChild(currElement);
@@ -107,7 +107,6 @@ function loadMonthlyMappings(year) {
                 let month = element[0];
                 let total = element[1];
                 let monthlyElement = document.createElement("li");
-                console.log("Month: " + month);
                 monthlyElement.textContent = monthlyNameMap.get(Number(month)) + ": " + total;
                 monthlyList.appendChild(monthlyElement);
                 let set = 0;
