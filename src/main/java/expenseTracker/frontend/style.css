@@ -1,6 +1,5 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    /* max-width: 1000px; */
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -13,10 +12,20 @@ body {
     display: flex;
     gap: 10px;
     padding: 8px;
+    width: 80%;
+}
+
+#expense-form select {
+    cursor: pointer;
+}
+
+#date {
+    cursor: pointer;
 }
 
 #expense-form button {
     cursor: pointer;
+    border-radius: 4px 1px;
 }
 
 #expense-form button:hover {
@@ -26,14 +35,14 @@ body {
 #expense-list {
     list-style: none;
     padding: 0;
-    width: 100%;
-    max-width: 500px;
+    width: 80%;
+    /* max-width: 500px; */
 }
 
 #expense-list li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: none;
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
@@ -46,4 +55,35 @@ body {
 
 #expense-list button:hover {
     background-color: rgb(200, 123, 123);
+}
+
+#yearly-list,
+#monthly-list,
+#daily-list {
+    list-style: none;
+    padding: 0;
+    cursor: pointer;
+    width: 80%;
+}
+
+#yearly-list li,
+#monthly-list li,
+#daily-list li {
+    border-radius: 4px 1px;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+#yearly-list li:hover,
+#monthly-list li:hover,
+#daily-list li:hover {
+    background-color: #b2b6dc;
+}
+
+#monthly-list {
+    margin-left: 20px;
+}
+
+#daily-list {
+    margin-left: 40px;
 }
