@@ -16,7 +16,7 @@ fetch('http://localhost:8080/api/expenses')
         for (let i = 0; i < data.length; i++) {
             let currElement = document.createElement("li");
             currElement.textContent = data[i].description;
-            expenseList.appendChild(currElement);
+            addExpenseList(currElement, data[i].uniqueID)
         }
     });
 
@@ -28,7 +28,7 @@ function loadExpenses() {
             for (let i = 0; i < data.length; i++) {
                 let currElement = document.createElement("li");
                 currElement.textContent = data[i].description;
-                expenseList.appendChild(currElement);
+                addExpenseList(currElement, data[i].uniqueID) 
             }
         });
 }
@@ -40,8 +40,25 @@ function loadExpense() {
         .then(data => {
             let currElement = document.createElement("li");
             currElement.textContent = data[data.length - 1].description;
-            expenseList.appendChild(currElement);
+            addExpenseList(currElement, data[data.length - 1].uniqueID)
         })
+}
+
+// Adds the element to expense-list and loads Delete button
+// and reloads window
+function addExpenseList(currElement, id) {
+    expenseList.appendChild(currElement);
+
+    let buttonElement = document.createElement("button");
+    buttonElement.textContent = "Delete";
+    expenseList.appendChild(buttonElement);
+    
+    buttonElement.addEventListener("click", () => {
+        fetch('http://localhost:8080/api/expenses/' + id, {
+            method: "DELETE"
+        });
+        location.reload();
+    })
 }
 
 // Load mappings with time at initialization
