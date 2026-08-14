@@ -121,7 +121,7 @@ public class AccountController {
             int currYear = currExpense.getDate().getYear();
             int currMonth = currExpense.getDate().getMonthValue();
 
-            if (currYear != year && currMonth != month) {
+            if (currYear != year || currMonth != month) {
                 continue;
             }
 
