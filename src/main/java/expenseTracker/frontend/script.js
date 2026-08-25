@@ -84,8 +84,10 @@ fetch('http://localhost:8080/api/account/yearlyMapping')
         map.forEach(element => {
             let year = element[0];
             let total = element[1];
-            let currElement = document.createElement("li");
-            currElement.textContent = year + ": " + total;
+            let currElement = document.createElement("details");
+            let summaryElement = document.createElement("summary");
+            summaryElement.textContent = year + ": " + total;
+            currElement.appendChild(summaryElement);
             yearlyList.appendChild(currElement);
             let set = 0;
             currElement.addEventListener("click", () => {
@@ -106,8 +108,10 @@ function loadMonthlyMappings(year) {
             monthMap.forEach(element => {
                 let month = element[0];
                 let total = element[1];
-                let monthlyElement = document.createElement("li");
-                monthlyElement.textContent = monthlyNameMap.get(Number(month)) + ": " + total;
+                let monthlyElement = document.createElement("details");
+                let summaryElement = document.createElement("summary");
+                summaryElement.textContent = monthlyNameMap.get(Number(month)) + ": " + total;
+                monthlyElement.appendChild(summaryElement);
                 monthlyList.appendChild(monthlyElement);
                 let set = 0;
                 monthlyElement.addEventListener("click", () => {
