@@ -70,11 +70,13 @@ body > form {
         #submit {
             background-color: rgb(73, 122, 178);
             color: white;
+            font-weight: bold;
         }
 
         #reset {
             background-color: rgb(205, 49, 49);
             color: white;
+            font-weight: bold;
         }
     }
 }
