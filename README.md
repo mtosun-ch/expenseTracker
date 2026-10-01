@@ -72,6 +72,6 @@ expenseTracker/
 │   ├── model/          # Expense and AccountBalance classes
 │   ├── repository/     # Database access
 │   └── controller/     # API endpoints
-├── frontend/           # index.html, style.css, script.js
+│   └── frontend/       # index.html, style.css, script.js
 └── pom.xml
 ```
